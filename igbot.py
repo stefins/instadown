@@ -10,7 +10,7 @@ def is_url(url):
     except ValueError:
         return 'False'
 
-url ="https://api.telegram.org/bot886435771:AAG3NZy7S3GUUG17yRNGQqlyaljxGw5NVkI/getUpdates"
+url ="YOUR KEY"
 
 previd = 0
 
@@ -36,7 +36,7 @@ while True:
                         if i=='"':
                             break
                         u=u+i
-                    requests.get("https://api.telegram.org/bot886435771:AAG3NZy7S3GUUG17yRNGQqlyaljxGw5NVkI/sendPhoto?chat_id="+str(chatid)+"&photo="+u)
+                    requests.get("https://api.telegram.org/bot{{YOUR KEY}}/sendPhoto?chat_id="+str(chatid)+"&photo="+u)
                     previd = msgid
                 except:
                     print("Errr")
