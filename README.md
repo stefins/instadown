@@ -1,3 +1,4 @@
-# Instagram Image Downloader Bot
+# Instagram Image Downloader
 
-This bot will download the image from a Instagram URL
+This application  will download all the image from an Instagram public profile
+
