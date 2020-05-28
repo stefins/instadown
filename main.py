@@ -39,7 +39,10 @@ try:
         os.mkdir('POSTS/')
     except:
         pass
-    os.mkdir('POSTS/'+username+'/')
+    try:
+       os.mkdir('POSTS/'+username+'/')
+    except:
+	    pass
     url = "https://www.instagram.com/"+username
     user_doc = requests.get(url,headers=headers,timeout=5).text
     json_data = re.search('window._sharedData = (.*);</script>',user_doc).group(1)
