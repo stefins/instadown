@@ -6,6 +6,8 @@ import re
 import wget
 import os
 from link import get_link_by_end
+import threading
+import time
 
 def download_img(uid,username):
     url = "https://www.instagram.com/p/"+str(uid)
@@ -53,9 +55,16 @@ try:
     sency,endlink=get_link_by_end(get_end_cursor(uid),account_id)
     while True:
         for k in sency:
-            download_img(k,username)
+            try:
+                t1 = threading.Thread(target=download_img, args=(k,username,))
+                t1.start()
+            except:
+                print("Some Error Occured :(")
             counter += 1
-        sency,endlink=get_link_by_end(endlink,account_id)
+        try:
+            sency,endlink=get_link_by_end(endlink,account_id)
+            t1.join()
+        except:
+            print("Some Error Occured ;(")
 except:
     print("\n\n"+str(counter)+" Images Downloaded!!")
-
