@@ -14,4 +14,4 @@ COPY . .
 
 ENTRYPOINT ["python","main.py"]
 
-CMD ["instagram","queryhash"]
+CMD ["github","yourqueryhash"]
