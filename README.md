@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/IamStefin/Instagram-Image-Downloader.svg?branch=master)](https://travis-ci.org/IamStefin/Instagram-Image-Downloader)
+
 # Instagram Image Downloader
 
 This application  will download all the image from an Instagram public profile
