@@ -5,6 +5,7 @@ import requests
 import re
 import wget
 import os
+import sys
 from link import get_link_by_end
 
 image_counter = 0
@@ -26,7 +27,7 @@ def download_video(html_doc,username):
     print(name)
     global video_counter
     video_counter += 1
-    
+
 def download_img(html_doc,username):
     result = re.search('"og:image" content="(.*)"', html_doc)
     link = result.group(1)
@@ -35,7 +36,7 @@ def download_img(html_doc,username):
     print(name)
     global image_counter
     image_counter += 1
-    
+
 def get_end_cursor(uid):
     url = "https://www.instagram.com/p/"+str(uid)
     user_doc = requests.get(url,headers=headers,timeout=5).text
@@ -54,7 +55,8 @@ headers = {
 }
 
 try:
-    username = input("Enter The Username : ")
+    username = sys.argv[1]
+    query_hash = sys.argv[2]
     try:
         os.mkdir('POSTS/')
     except:
@@ -70,11 +72,11 @@ try:
     account_id = str(d['entry_data']['ProfilePage'][0]['graphql']['user']['id'])
     end_cursor = str(d['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['page_info']['end_cursor'])
     uid= d['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'][0]['node']['shortcode']
-    sency,endlink=get_link_by_end(get_end_cursor(uid),account_id)
+    sency,endlink=get_link_by_end(get_end_cursor(uid),account_id,query_hash)
     while True:
         for k in sency:
             download_content(k, username)
-        sency,endlink=get_link_by_end(endlink,account_id)
+        sency,endlink=get_link_by_end(endlink,account_id,query_hash)
 except:
     print("\n\n" + str(image_counter) + " Images Downloaded!!")
     print(str(video_counter) + " Videos Downloaded!!")

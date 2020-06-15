@@ -2,8 +2,6 @@
 
 This application  will download all the image from an Instagram public profile
 
-## Paste your query hash in `link.py`
-
 ## How to get a query_hash
 
 https://github.com/mineur/instagram-parser/blob/master/docs/setup.md#how-to-get-your-query-hash-old-query-id
@@ -16,9 +14,12 @@ cd Instagram-Image-Downloader
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python main.py
+python main.py github `your query hash`
 ```
+This will download all post from Github instagram page
 
 Threading is available in `threading` branch
+
+## Running in Docker
 
 Feel free to make this code better :)
