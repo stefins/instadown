@@ -7,14 +7,35 @@ import wget
 import os
 from link import get_link_by_end
 
-def download_img(uid,username):
+image_counter = 0
+video_counter = 0
+
+def download_content(uid, username):
     url = "https://www.instagram.com/p/"+str(uid)
     html_doc = requests.get(url,headers=headers,timeout=5).text
-    result = re.search('"og:image" content="(.*)"', html_doc)
+    try:
+        download_video(html_doc, username)
+    except:
+        download_img(html_doc, username)
+
+def download_video(html_doc,username):
+    result = re.search('"og:video" content="(.*)"', html_doc)
     link = result.group(1)
+    print('Downloading Video')
     name=wget.download(link,'POSTS/'+username+'/')
     print(name)
-
+    global video_counter
+    video_counter += 1
+    
+def download_img(html_doc,username):
+    result = re.search('"og:image" content="(.*)"', html_doc)
+    link = result.group(1)
+    print('Downloading Image')
+    name=wget.download(link,'POSTS/'+username+'/')
+    print(name)
+    global image_counter
+    image_counter += 1
+    
 def get_end_cursor(uid):
     url = "https://www.instagram.com/p/"+str(uid)
     user_doc = requests.get(url,headers=headers,timeout=5).text
@@ -33,7 +54,6 @@ headers = {
 }
 
 try:
-    counter = 0
     username = input("Enter The Username : ")
     try:
         os.mkdir('POSTS/')
@@ -53,9 +73,8 @@ try:
     sency,endlink=get_link_by_end(get_end_cursor(uid),account_id)
     while True:
         for k in sency:
-            download_img(k,username)
-            counter += 1
+            download_content(k, username)
         sency,endlink=get_link_by_end(endlink,account_id)
 except:
-    print("\n\n"+str(counter)+" Images Downloaded!!")
-
+    print("\n\n" + str(image_counter) + " Images Downloaded!!")
+    print(str(video_counter) + " Videos Downloaded!!")
