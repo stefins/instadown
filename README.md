@@ -22,4 +22,13 @@ Threading is available in `threading` branch
 
 ## Running in Docker
 
+In interactive mode
+
+`docker run -it  -v $(pwd):/app/POSTS/ iamstefin/instadown github {your_query_hash}`
+
+In background mode
+
+`docker run -d  -v $(pwd):/app/POSTS/ iamstefin/instadown github {your_query_hash}`
+
+
 Feel free to make this code better :)
