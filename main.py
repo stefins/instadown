@@ -84,8 +84,14 @@ try:
     sency,endlink=get_link_by_end(get_end_cursor(uid),account_id,query_hash)
     while True:
         for k in sency:
-            download_content(k, username)
-        sency,endlink=get_link_by_end(endlink,account_id,query_hash)
+            try:
+                download_content(k, username)
+            except:
+                print("Download Failed!!")
+        try:
+            sency,endlink=get_link_by_end(endlink,account_id,query_hash)
+        except:
+            print("End link fetching failed!!")
 except:
     print("\n\n" + str(image_counter) + " Images Downloaded!!")
     print(str(video_counter) + " Videos Downloaded!!")
