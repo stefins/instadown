@@ -10,7 +10,7 @@ headers = {
 }
 def get_link_by_end(after,idd,query_hash):
     url = 'https://www.instagram.com/graphql/query/?query_hash='+query_hash+'&variables={"id":"'+idd+'","first":50,"after":"'+after+'"}'
-    user_doc = requests.get(url,headers=headers,timeout=5).text
+    user_doc = requests.get(url,headers=headers).text
     user_doc = json.loads(user_doc)
     links =[]
     for i in range(50):
