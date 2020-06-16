@@ -5,9 +5,11 @@ import requests
 import re
 import wget
 import os
+import logging
 import sys
 from link import get_link_by_end
 
+logging.basicConfig(level=logging.INFO)
 image_counter = 0
 video_counter = 0
 
@@ -22,9 +24,9 @@ def download_content(uid, username):
 def download_video(html_doc,username):
     result = re.search('"og:video" content="(.*)"', html_doc)
     link = result.group(1)
-    print('Downloading Video')
+    logging.info('Downloading Video')
     name=wget.download(link,'POSTS/'+username+'/')
-    print(name)
+    logging.info(name)
     global video_counter
     video_counter += 1
 
@@ -40,9 +42,9 @@ def download_img(html_doc,username):
         except:
             break
     for link in img_list:
-        print('Downloading Image')
+        logging.info('Downloading Image')
         name=wget.download(link,'POSTS/'+username+'/')
-        print(name)
+        logging.info("\n"+name)
         global image_counter
         image_counter += 1
 
@@ -87,11 +89,14 @@ try:
             try:
                 download_content(k, username)
             except requests.exceptions.ReadTimeout:
-                print("Download Failed!!")
+                logging.info("Download Failed!!")
         try:
             sency,endlink=get_link_by_end(endlink,account_id,query_hash)
         except requests.exceptions.ReadTimeout:
-            print("End link fetching failed!!")
+            logging.info("End link fetching failed!!")
 except requests.exceptions.ReadTimeout:
-    print("\n\n" + str(image_counter) + " Images Downloaded!!")
-    print(str(video_counter) + " Videos Downloaded!!")
+    logging.info("\n\n" + str(image_counter) + " Images Downloaded!!")
+    logging.info(str(video_counter) + " Videos Downloaded!!")
+except KeyboardInterrupt:
+    logging.info("\n\n" + str(image_counter) + " Images Downloaded!!")
+    logging.info(str(video_counter) + " Videos Downloaded!!")
