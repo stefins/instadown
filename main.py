@@ -75,7 +75,7 @@ try:
     except:
 	    pass
     url = "https://www.instagram.com/"+username
-    user_doc = requests.get(url,headers=headers,timeout=5).text
+    user_doc = requests.get(url,headers=headers).text
     json_data = re.search('window._sharedData = (.*);</script>',user_doc).group(1)
     d = json.loads(json_data)
     account_id = str(d['entry_data']['ProfilePage'][0]['graphql']['user']['id'])
@@ -86,12 +86,12 @@ try:
         for k in sency:
             try:
                 download_content(k, username)
-            except:
+            except requests.exceptions.ReadTimeout:
                 print("Download Failed!!")
         try:
             sency,endlink=get_link_by_end(endlink,account_id,query_hash)
-        except:
+        except requests.exceptions.ReadTimeout:
             print("End link fetching failed!!")
-except:
+except requests.exceptions.ReadTimeout:
     print("\n\n" + str(image_counter) + " Images Downloaded!!")
     print(str(video_counter) + " Videos Downloaded!!")
