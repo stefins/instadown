@@ -29,13 +29,22 @@ def download_video(html_doc,username):
     video_counter += 1
 
 def download_img(html_doc,username):
-    result = re.search('"og:image" content="(.*)"', html_doc)
-    link = result.group(1)
-    print('Downloading Image')
-    name=wget.download(link,'POSTS/'+username+'/')
-    print(name)
-    global image_counter
-    image_counter += 1
+    img_list = []
+    json_data = re.search('window._sharedData = (.*);</script>',html_doc).group(1)
+    d = json.loads(json_data)
+    co =0
+    while True:
+        try:
+            img_list.append(d["entry_data"]["PostPage"][0]["graphql"]["shortcode_media"]["edge_sidecar_to_children"]["edges"][co]["node"]["display_url"])
+            co+=1
+        except:
+            break
+    for link in img_list:
+        print('Downloading Image')
+        name=wget.download(link,'POSTS/'+username+'/')
+        print(name)
+        global image_counter
+        image_counter += 1
 
 def get_end_cursor(uid):
     url = "https://www.instagram.com/p/"+str(uid)
