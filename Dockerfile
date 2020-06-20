@@ -12,6 +12,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENTRYPOINT ["python","mainn.py"]
+ENTRYPOINT ["python","main.py"]
 
 CMD ["github","yourqueryhash"]
