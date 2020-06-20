@@ -75,42 +75,38 @@ headers = {
     'Upgrade-Insecure-Requests': '1',
 }
 
-def main():
+try:
+    username = sys.argv[1]
+    query_hash = sys.argv[2]
     try:
-        username = sys.argv[1]
-        query_hash = sys.argv[2]
-        try:
-            os.mkdir('POSTS/')
-        except:
-            pass
-        try:
-           os.mkdir('POSTS/'+username+'/')
-        except:
-    	    pass
-        url = "https://www.instagram.com/"+username
-        user_doc = requests.get(url,headers=headers).text
-        json_data = re.search('window._sharedData = (.*);</script>',user_doc).group(1)
-        d = json.loads(json_data)
-        account_id = str(d['entry_data']['ProfilePage'][0]['graphql']['user']['id'])
-        end_cursor = str(d['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['page_info']['end_cursor'])
-        uid= d['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'][0]['node']['shortcode']
-        sency,endlink=get_link_by_end(get_end_cursor(uid),account_id,query_hash)
-        while True:
-            for k in sency:
-                try:
-                    download_content(k, username)
-                except requests.exceptions.ReadTimeout:
-                    logging.info("Download Failed!!")
+        os.mkdir('POSTS/')
+    except:
+        pass
+    try:
+       os.mkdir('POSTS/'+username+'/')
+    except:
+	    pass
+    url = "https://www.instagram.com/"+username
+    user_doc = requests.get(url,headers=headers).text
+    json_data = re.search('window._sharedData = (.*);</script>',user_doc).group(1)
+    d = json.loads(json_data)
+    account_id = str(d['entry_data']['ProfilePage'][0]['graphql']['user']['id'])
+    end_cursor = str(d['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['page_info']['end_cursor'])
+    uid= d['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges'][0]['node']['shortcode']
+    sency,endlink=get_link_by_end(get_end_cursor(uid),account_id,query_hash)
+    while True:
+        for k in sency:
             try:
-                sency,endlink=get_link_by_end(endlink,account_id,query_hash)
+                download_content(k, username)
             except requests.exceptions.ReadTimeout:
-                logging.info("End link fetching failed!!")
-    except requests.exceptions.ReadTimeout:
-        logging.info("\n\n" + str(image_counter) + " Images Downloaded!!")
-        logging.info(str(video_counter) + " Videos Downloaded!!")
-    except KeyboardInterrupt:
-        logging.info("\n\n" + str(image_counter) + " Images Downloaded!!")
-        logging.info(str(video_counter) + " Videos Downloaded!!")
-
-if __name__ == "__main__":
-    main()
+                logging.info("Download Failed!!")
+        try:
+            sency,endlink=get_link_by_end(endlink,account_id,query_hash)
+        except requests.exceptions.ReadTimeout:
+            logging.info("End link fetching failed!!")
+except requests.exceptions.ReadTimeout:
+    logging.info("\n\n" + str(image_counter) + " Images Downloaded!!")
+    logging.info(str(video_counter) + " Videos Downloaded!!")
+except KeyboardInterrupt:
+    logging.info("\n\n" + str(image_counter) + " Images Downloaded!!")
+    logging.info(str(video_counter) + " Videos Downloaded!!")
