@@ -7,7 +7,6 @@ import wget
 import os
 import logging
 import sys
-from link import get_link_by_end
 
 logging.basicConfig(level=logging.INFO)
 image_counter = 0
@@ -55,6 +54,17 @@ def get_end_cursor(uid):
     d = json.loads(json_data)
     end_cursor = str(d['entry_data']['PostPage'][0]['graphql']['shortcode_media']['edge_media_to_parent_comment']['page_info']['end_cursor'])
     return end_cursor
+
+def get_link_by_end(after,idd,query_hash):
+    url = 'https://www.instagram.com/graphql/query/?query_hash='+query_hash+'&variables={"id":"'+idd+'","first":50,"after":"'+after+'"}'
+    user_doc = requests.get(url,headers=headers).text
+    user_doc = json.loads(user_doc)
+    links =[]
+    for i in range(50):
+        links.append(str(user_doc['data']['user']['edge_owner_to_timeline_media']['edges'][i]['node']['shortcode']))
+    new_endlink= str(user_doc['data']['user']['edge_owner_to_timeline_media']['page_info']['end_cursor'])
+    return links,new_endlink
+
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:74.0) Gecko/20100101 Firefox/74.0',
