@@ -7,8 +7,10 @@ script:
   - 'make test'
   - 'make image'
 
-after_success:
-  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-      docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
-      make push-image ;
-    fi
+deploy:
+  provider: script
+  script:
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+    make push-image ;
+  on:
+    branch: master
