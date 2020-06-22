@@ -33,6 +33,7 @@ def download_img(html_doc,username):
     img_list = []
     json_data = re.search('window._sharedData = (.*);</script>',html_doc).group(1)
     d = json.loads(json_data)
+    global image_counter
     co =0
     while True:
         try:
@@ -40,12 +41,19 @@ def download_img(html_doc,username):
             co+=1
         except:
             break
-    for link in img_list:
+    if not img_list:
+        result = re.search('"og:image" content="(.*)"', html_doc)
+        link = result.group(1)
         logging.info('Downloading Image')
         name=wget.download(link,'POSTS/'+username+'/')
         logging.info("\n"+name)
-        global image_counter
         image_counter += 1
+    else:
+        for link in img_list:
+            logging.info('Downloading Image')
+            name=wget.download(link,'POSTS/'+username+'/')
+            logging.info("\n"+name)
+            image_counter += 1
 
 def get_end_cursor(uid):
     url = "https://www.instagram.com/p/"+str(uid)
