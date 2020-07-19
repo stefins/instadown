@@ -26,11 +26,17 @@ Threading is available in `threading` branch
 
 In interactive mode
 
-`docker run -it  -v $(pwd):/app/POSTS/ iamstefin/instadown github {your_query_hash}`
+`docker run -it  -v $(pwd):/app/instadown/POSTS/ iamstefin/instadown github {your_query_hash}`
 
 In background mode
 
-`docker run -d  -v $(pwd):/app/POSTS/ iamstefin/instadown github {your_query_hash}`
+`docker run -d  -v $(pwd):/app/instadown/POSTS/ iamstefin/instadown github {your_query_hash}`
 
+## Using pip
+```bash
+pip install instadown
+
+instadown github `your query hash`
+```
 
 Feel free to make this code better :)
