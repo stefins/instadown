@@ -97,6 +97,13 @@ headers = {
 }
 
 def main():
+    if len(sys.argv) > 3:
+        print('You have specified too many arguments')
+        sys.exit()
+    elif len(sys.argv) == 1 or len(sys.argv) == 2:
+        print("Usage: \n")
+        print("instadown 'user_name' 'query_hash'")
+        sys.exit()
     try:
         username = sys.argv[1]
         query_hash = sys.argv[2]
@@ -134,6 +141,8 @@ def main():
     except KeyboardInterrupt:
         logging.info("\n\n" + str(image_counter) + " Images Downloaded!!")
         logging.info(str(video_counter) + " Videos Downloaded!!")
+    except:
+        logging.info("\nOops! Some Error Occured!!")
 
 if __name__ == '__main__':
     main()
