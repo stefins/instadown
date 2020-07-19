@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-WORKDIR ./app/instadown
+WORKDIR ./instadown
 
 ENTRYPOINT ["python","ig.py"]
 
