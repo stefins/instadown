@@ -12,6 +12,8 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENTRYPOINT ["python","main.py"]
+WORKDIR ./instadown
+
+ENTRYPOINT ["python","ig.py"]
 
 CMD ["github","yourqueryhash"]
