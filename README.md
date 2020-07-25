@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/IamStefin/Instagram-Image-Downloader.svg?branch=master)](https://travis-ci.org/IamStefin/Instagram-Image-Downloader)
+[![Build Status](https://travis-ci.org/IamStefin/instadown.svg?branch=master)](https://travis-ci.org/IamStefin/instadown)
 
 # InstaDown
 
