@@ -11,7 +11,7 @@ https://github.com/mineur/instagram-parser/blob/master/docs/setup.md#how-to-get-
 ## How to use ?
 
 ```bash
-git clone https://github.com/IamStefin/Instagram-Image-Downloader.git
+git clone https://github.com/stefins/Instagram-Image-Downloader.git
 cd Instagram-Image-Downloader
 python3 -m venv venv
 source venv/bin/activate
