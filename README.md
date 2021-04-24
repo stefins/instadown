@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/IamStefin/instadown.svg?branch=master)](https://travis-ci.org/IamStefin/instadown)
-
-# InstaDown
+# InstaDown (Deprecated)
 
 This application  will download all the image from an Instagram public profile
 
@@ -39,4 +37,4 @@ pip install instadown
 instadown github `your query hash`
 ```
 
-Feel free to make this code better :)
+This project is no longer being maintained
